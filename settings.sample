@@ -1,0 +1,9 @@
+settings = {
+    "project_1": {
+        "repo": "git@github.com:username/reponame.git",
+    },
+
+    "project_2" : {
+        "repo": "https://github.com/username/reponame.git"
+    },
+}

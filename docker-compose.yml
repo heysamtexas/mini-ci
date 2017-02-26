@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+
+    flask:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./web.py:/web.py
+            - ./settings.py:/settings.py
+        command: python /web.py
+        ports:
+            - 5000:5000
+        depends_on:
+            - runner
+
+    runner:
+        image: runner
+        command: python /runner.py
+        env_file: .env
+        volumes:
+            - ./runner.py:/runner.py
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./workspace:/workspace
+        ports:
+            - "4444:4444"
