@@ -47,5 +47,29 @@ the various projects that mini-ci will build. Things such as:
 
 **TODO**: Create a Makefile target that sets this up
 
+"""
+### How to use this file
+
+The root keys in the settings variables must match the webhook uri.
+That means that when a webhook post comes in github to
+http://youserver/webhook/project_1, then settings must look
+something like this:
+
+```
+settings = {
+    "project_1": {
+        "GIT_REPO": "http://github.com/username/reponame.git"
+        "OPTIONAL_ENV_1": "test123",
+        "OPTIONAL_ENV_2": "hahahaha"
+    }
+```
+
+These settings will be imported into the build runners as environment
+variables. That means that GIT_REPO will be accesses as
+$GIT_REPO in the bash commands and makefile.
+
+Required keys:
+    - GIT_REPO is required to
+"""
 
 

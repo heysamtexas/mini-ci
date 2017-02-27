@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 import time
 import zmq
@@ -7,7 +8,7 @@ from subprocess import Popen, PIPE
 
 class Builder:
 
-    def __init__(self, repo):
+    def __init__(self, env_payload):
         """just a simple unix epoc timestamp
 
         this guarantees that we will have unique workspace folders
@@ -20,12 +21,7 @@ class Builder:
         """
         self.WORKSPACE = 'workspace/{}'.format(self.TIMESTAMP)
 
-        """git repo, the full url
-
-        example: git@github.com:3cosystem/website.git
-                 https://github.com/3cosystem/website.git
-        """
-        self.REPO = repo
+        self.ENV = env_payload
 
     def procrun(self, command, directory=None, logmessage=None):
         """run a shell command. this is the method used to run the
@@ -43,7 +39,7 @@ class Builder:
         c = 'cd {} && {}'.format(directory, command)
 
         with Popen(c, stdout=PIPE, bufsize=1, universal_newlines=True,
-                   shell=True) as p:
+                   shell=True, env={**os.environ.copy(), **self.ENV}) as p:
 
             for line in p.stdout:
                 out += line
@@ -64,7 +60,7 @@ class Builder:
 
     def clone_repo(self):
         """clone the repo into the workspace folder"""
-        self.procrun("git clone {} {}".format(self.REPO, self.WORKSPACE),
+        self.procrun("git clone $GIT_REPO {}".format(self.WORKSPACE),
                      directory='.',
                      logmessage="Cloning repo...")
 
@@ -108,7 +104,8 @@ class Builder:
         msg = ("Repository     : {}\n"
                "Working folder : {}\n"
                "Timestamp      : {}")
-        logging.info(msg.format(self.REPO, self.WORKSPACE, self.TIMESTAMP))
+        logging.info(msg.format(self.ENV['GIT_REPO'], self.WORKSPACE,
+                                self.TIMESTAMP))
 
         self.create_workspace()
         self.clone_repo()
@@ -131,18 +128,14 @@ class Runner:
 
         while True:
             logging.debug('inside while')
-            message = socket.recv_pyobj()
-            if message:
-                logging.debug('received message')
-                self.run_build(message)
+            payload = socket.recv_pyobj()
+            if payload:
+                logging.debug('received payload')
+                self.run_build(payload)
                 time.sleep(3)
 
-    def run_build_tmp(self, message):
-        logging.debug(message)
-
-    def run_build(self, message):
-        repo = message["repo"]
-        builder = Builder(repo)
+    def run_build(self, env_payload):
+        builder = Builder(env_payload)
 
         try:
             builder.run_build()
