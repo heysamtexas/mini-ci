@@ -70,3 +70,21 @@ $GIT_REPO in the bash commands and makefile.
 
 Required keys:
     - GIT_REPO
+
+## Put a Makefile in your project and define a 'ci-build' target
+Mini-ci will attempt to run a `Makefile` from the root folder of you
+source code. In that Makefile you must define You must define the 
+`ci-deploy` target in your makefile for the runner to do its job. 
+
+This is a hard-coded requirement at the moment.
+
+The `Makefile` will have access to the environment variables that come
+from your project's configuration in settings.py. See the comments in the
+Makefile sourcecode to see how they are used.
+
+Please take note how this Makefile uses environment variables from 
+`settings.py` which are used in naming and tagging docker images as
+well as instructing the production environment (dokku server) to update
+code with new docker images.
+
+Have a look in the `examples/` folder to see how you might use it
