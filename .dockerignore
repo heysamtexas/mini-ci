@@ -1,3 +1,4 @@
 workspace/
 .env
 settings.py
+examples/
