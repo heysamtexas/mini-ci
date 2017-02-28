@@ -12,7 +12,10 @@ settings = {
     "project_1": {
         "GIT_REPO": "http://github.com/username/reponame.git"
         "OPTIONAL_ENV_1": "test123",
-        "OPTIONAL_ENV_2": "hahahaha"
+        "OPTIONAL_ENV_2": "hahahaha",
+
+        "DOCKER_USER": "dockeruser",
+        "DOCKER_PASS": "password123"
     }
 ```
 
@@ -21,15 +24,15 @@ variables. That means that GIT_REPO will be accesses as
 $GIT_REPO in the bash commands and makefile.
 
 Required keys:
-    - GIT_REPO is required to
+    - GIT_REPO
 """
 
 settings = {
     "project_1": {
-        "repo": "git@github.com:username/reponame.git",
+        "GIT_REPO": "git@github.com:username/reponame.git",
     },
 
     "project_2" : {
-        "repo": "https://github.com/username/reponame.git"
+        "GIT_REPO": "https://github.com/username/reponame.git"
     },
 }
