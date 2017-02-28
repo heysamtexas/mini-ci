@@ -72,6 +72,7 @@ Required keys:
     - GIT_REPO
 
 ## Put a Makefile in your project and define a 'ci-build' target
+
 Mini-ci will attempt to run a `Makefile` from the root folder of you
 source code. In that Makefile you must define You must define the 
 `ci-deploy` target in your makefile for the runner to do its job. 
@@ -88,3 +89,14 @@ well as instructing the production environment (dokku server) to update
 code with new docker images.
 
 Have a look in the `examples/` folder to see how you might use it
+
+
+# Other important things you need to know
+
+## Security is not a primary goal on this project
+
+**Be advised!** This project requires running docker images with access
+to the docker socket (`/var/run/docker.socket`). You should therefore
+only run this app in a trusted environment.
+
+
