@@ -15,7 +15,7 @@ def push_message(project):
     socket.send_pyobj(project)
 
 
-@app.route("/webhook/<project>")
+@app.route("/webhook/<project>", methods=['POST'])
 def webhook(project):
 
     # validate that project exists
