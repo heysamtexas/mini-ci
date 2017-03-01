@@ -15,11 +15,6 @@ def push_message(project):
     socket.send_pyobj(project)
 
 
-@app.route("/")
-def hello():
-    return "Hello World!"
-
-
 @app.route("/webhook/<project>")
 def webhook(project):
 
