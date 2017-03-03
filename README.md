@@ -24,6 +24,10 @@ will stand up robust, reliable, and information-rich services.
   3. Have a tool that requires as little resources as possible (Depending on the tests)
   4. Use CI/CD without learning another DSL, configuration format, or programming language. (This is subjective, I guess)
 
+# Logical layout
+
+![logical layout](docs/logical-diagram.svg)
+
 # Getting started
 
 ## 1. Create .env (Configure environment variables)
