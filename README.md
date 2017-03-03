@@ -26,7 +26,7 @@ will stand up robust, reliable, and information-rich services.
 
 # Logical layout
 
-![logical layout](docs/logical-diagram.svg)
+![logical layout](https://github.com/undernewmanagement/mini-ci/raw/master/docs/logical-diagram.svg)
 
 # Getting started
 
