@@ -2,7 +2,8 @@ from flask import Flask
 import zmq
 import time
 
-from settings import settings
+import settings
+import importlib
 
 app = Flask(__name__)
 
@@ -18,9 +19,11 @@ def push_message(project):
 @app.route("/webhook/<project>", methods=['POST'])
 def webhook(project):
 
+    importlib.reload(settings)
+
     # validate that project exists
-    if project in settings:
-        push_message(settings[project])
+    if project in settings.settings:
+        push_message(settings.settings[project])
         return "Success"
     else:
         # todo: return 400
