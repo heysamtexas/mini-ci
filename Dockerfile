@@ -20,7 +20,8 @@ COPY /runner.py /runner.py
 
 RUN mkdir -p /root/.ssh \
     && chmod 700 /root/.ssh \
-    && ssh-keyscan github.com >> /root/.ssh/known_hosts
+    && ssh-keyscan github.com >> /root/.ssh/known_hosts \
+    && ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
 
 RUN curl -fL "https://raw.githubusercontent.com/buildkite/docker-ssh-env-config/d06f20bdc7457a647bfe3724d94525f83c863091/ssh-env-config.sh" -o /usr/local/bin/ssh-env-config.sh \
     && chmod +x /usr/local/bin/ssh-env-config.sh 
